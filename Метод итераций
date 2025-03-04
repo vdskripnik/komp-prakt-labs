@@ -1,0 +1,36 @@
+// Метод итераций 
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+
+double example_function(double x) {
+    return x - 0.2 * (x * x + 6.0);
+}
+
+double simple_iteration_method(double x_0, double epsilon) {
+    double x = x_0;
+    int iter = 0;
+    
+    while (true) {
+        double x_new = 0.2 * (x * x + 6.0);
+        
+        if (std::abs(x_new - x) < epsilon) {
+            std::cout << "Количество итераций: " << iter << std::endl;
+            return x_new;
+        }
+        x = x_new;
+        iter++;
+    }
+}
+
+int main() {
+    double x_0 = 0;
+    double epsilon = 1e-2;
+    
+    double root = simple_iteration_method(x_0, epsilon);
+    std::cout << "Решение уравнения: x = " << root << std::endl;
+    double fun = example_function(root);
+    std::cout << "Значение функции: f(" << root << ") = " << fun << std::endl;
+
+    return 0;
+}
