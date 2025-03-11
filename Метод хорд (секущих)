@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip> // Для std::setprecision
+
+// Определение функции f(x)
+double example_function(double x) {
+    return pow(x, 3) - 0.2 * pow(x, 2) + 0.5 * x - 1;
+}
+
+// Метод хорд (секущих)
+double chord_method(double (*f)(double), double a, double b, double eps, int max_iter) {
+    if (f(a) * f(b) >= 0) { // Проверка на наличие корня
+        return NAN; // Если корня нет, возвращаем NAN
+    }
+    
+    double x = a - (b - a) * f(a) / (f(b) - f(a)); // Начальное приближение
+    int iteration = 0;
+
+    for (int i = 0; i < max_iter; i++) {
+        if (fabs(f(x)) < eps) { // Проверка на точность
+            break;
+        }
+
+        // Обновляем границы
+        if (f(a) * f(x) < 0) {
+            b = x;
+        } else {
+            a = x;
+        }
+        
+        // Вычисляем новое приближение
+        x = a - (b - a) * f(a) / (f(b) - f(a));
+        iteration++;
+    }
+
+    std::cout << "Количество итераций: " << iteration << std::endl;
+    return x; // Возвращаем найденный корень
+}
+
+int main() {
+    double a = 0; // Левый край
+    double b = 3; // Правый край
+    double epsilon = 1e-6; // Точность
+    int max_iter = 1000; // Максимальное количество итераций
+
+    // Поиск корня
+    double root = chord_method(example_function, a, b, epsilon, max_iter);
+
+    // Печать результата
+    if (!std::isnan(root)) {
+        std::cout << std::fixed << std::setprecision(12);
+        std::cout << "Корень уравнения: " << root << std::endl; // Вывод корня
+        double fun = example_function(root);
+        std::cout << "Значение функции: f(" << root << ") = " << fun << std::endl; // Вывод значения функции
+    } else {
+        std::cout << "Корень не найден." << std::endl;
+    }
+
+    return 0;
+}
