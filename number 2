@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+// V начальная скорость ,угол в радианах alpha, tol допустимая погрешность 
 double findDistance(double V, double alpha, double tol = 1e-6) {
     double g = 9.81;
     double L = 1.0;
