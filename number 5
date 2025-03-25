@@ -1,10 +1,10 @@
 #include <iostream>
-
+// используется метод итераций для обновления значения S (растояние)
 double findDistance(double U, double T, double tol = 1e-6) {
     double S = 1.0, new_S;
 
     do {
-        new_S = U * T;
+        new_S = U * T; // внутри каждого цикла происходит рассчет нового расстояния 
         if (std::abs(new_S - S) < tol) break;
         S = new_S;
     } while (true);
@@ -13,7 +13,7 @@ double findDistance(double U, double T, double tol = 1e-6) {
 }
 
 int main() {
-    double U, T;
+    double U, T; // скорость, время 
     std::cout << "Введите U и T: ";
     std::cin >> U >> T;
 
