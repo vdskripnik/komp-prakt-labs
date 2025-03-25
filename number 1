@@ -1,16 +1,16 @@
 #include <iostream>
 #include <cmath>
-
-const double g = 9.81; 
+// вычислим угол альфа под которым необходимо запустить обьект с начальным условием 
+const double g = 9.81; // ускорение свободного падения 
 
 double calculateAlpha(double V, double T, double epsilon = 1e-6) {
-    double left = 0, right = M_PI / 2, mid;
+    double left = 0, right = M_PI / 2, mid; // диапазон возможных значений угла альфа 
     while (right - left > epsilon) {
         mid = (left + right) / 2;
-        if (sin(mid) < (g * T) / (2 * V))
-            left = mid;
+        if (sin(mid) < (g * T) / (2 * V)) // проверка синуса 
+            left = mid; // сдвигаем левую границу 
         else
-            right = mid;
+            right = mid; // иначе правую 
     }
     return mid;
 }
