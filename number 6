@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cmath>
-
+// используется метод итерации
 double findTime(double S, double V, double U, double tol = 1e-6) {
-    double T = 1.0, new_T;
+    double T = 1.0, new_T; // начальное значение времени 
 
     do {
         new_T = S / (V + U) + S / (V - U);
@@ -14,7 +14,7 @@ double findTime(double S, double V, double U, double tol = 1e-6) {
 }
 
 int main() {
-    double S, V, U;
+    double S, V, U; // дробные числа
     std::cout << "Введите S, V и U: ";
     std::cin >> S >> V >> U;
 
