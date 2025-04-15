@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
-
-double findDistance(double V, double t, double tol = 1e-6) {
+// используется метод итерационного приближения для нахождения пройденного пути 
+double findDistance(double V, double t, double tol = 1e-6) { // tol погрешность
     double a = V / t;  // Предполагаем, что ускорение равно V/t
     double S = 1.0, new_S;
 
