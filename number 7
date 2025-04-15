@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cmath>
-
+// метод итераций для нахождения скорости
 void findSpeeds(double S, double V, double t, double tol = 1e-6) {
     double V1 = 1.0, V2 = 1.0, new_V1, new_V2;
 
-    do {
+    do { //обновляем скорость, пока разница между новой и старой не станет меньше tol
         new_V1 = S / (t + S / V);
         new_V2 = 2 * S / ((2 * S / V) - t);
 
