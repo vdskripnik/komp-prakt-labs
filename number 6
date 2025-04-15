@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
-// используется метод итерации
-double findTime(double S, double V, double U, double tol = 1e-6) {
+// используется метод итерации для вычисления времени
+double findTime(double S, double V, double U, double tol = 1e-6) { //tol допустимая точность
     double T = 1.0, new_T; // начальное значение времени 
 
     do {
