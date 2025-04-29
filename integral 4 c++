@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double f(double x) {
+    return x * x * exp(-x); // Подынтегральная функция x²e⁻ˣ
+}
+
+// Метод трапеций
+double trapezoidal(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = 0.5 * (f(a) + f(b));
+    for (int i = 1; i < n; ++i) {
+        sum += f(a + i * h);
+    }
+    return sum * h;
+}
+
+// Метод Симпсона
+double simpson(double a, double b, int n) {
+    if (n % 2 != 0) n++; // Четное число шагов
+    double h = (b - a) / n;
+    double sum = f(a) + f(b);
+    for (int i = 1; i < n; ++i) {
+        double coef = (i % 2 == 0) ? 2 : 4;
+        sum += coef * f(a + i * h);
+    }
+    return sum * h / 3;
+}
+
+int main() {
+    double N = 20.0;  // Замена бесконечного предела
+    int n = 10000;    // Количество шагов
+    double exact = 2.0; // Точное значение Γ(3) = 2! = 2
+
+    // Вычисление интеграла от 0 до N
+    double result_trap = trapezoidal(0, N, n);
+    double result_simp = simpson(0, N, n);
+
+    cout << "Точное значение: " << exact << endl;
+    cout << "Метод трапеций: " << result_trap << endl;
+    cout << "Метод Симпсона:  " << result_simp << endl;
+
+    return 0;
+}
