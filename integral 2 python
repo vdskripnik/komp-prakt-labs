@@ -1,0 +1,20 @@
+import numpy as np
+#Метод прямоугольника
+def f(x):
+    return np.exp(-2) * np.sin(2 * x)
+
+def rectangle_method(a, b, n):
+    h = (b - a) / n
+    sum = 0.0
+
+    for i in range(n):
+        sum += f(a + i * h)
+    
+    return sum * h
+
+a = 0.0
+b = 100.0  # Ограничиваем верхний предел
+n = 100000  # Число подынтервалов
+result = rectangle_method(a, b, n)
+
+print(f"Приближенное значение интеграла: {result}")
