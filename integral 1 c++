@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+double f1(double x, double a) {
+    return pow(x, a) * log(x);
+}
+
+double rectangle_method(double a, int n) {
+    double h = 1.0 / n;
+    double sum = 0.0;
+    for (int i = 0; i < n; ++i) {
+        sum += f1(i * h, a);
+    }
+    return sum * h;
+}
+
+double trapezoidal_method(double a, int n) {
+    double h = 1.0 / n;
+    double sum = (f1(0, a) + f1(1, a)) / 2.0;
+    for (int i = 1; i < n; ++i) {
+        sum += f1(i * h, a);
+    }
+    return sum * h;
+}
+
+int main() {
+    double a = -1; // Пример значения a
+    int n = 1000000; // Количество разбиений
+
+    double result_rectangle = rectangle_method(a, n);
+    double result_trapezoidal = trapezoidal_method(a, n);
+
+    std::cout << std::fixed << std::setprecision(6);
+    std::cout << "Результат метода прямоугольников: " << result_rectangle << std::endl;
+    std::cout << "Результат метода трапеций: " << result_trapezoidal << std::endl;
+
+    return 0;
+}
