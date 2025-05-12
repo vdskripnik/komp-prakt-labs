@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+// Функция для вычисления значения интегрируемой функции
+double f(double x) {
+    return 1.0 / (x * x - 4 * x + 3);
+}
+
+// Метод прямоугольников
+double rectangleMethod(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = 0.0;
+    for (int i = 0; i < n; ++i) {
+        sum += f(a + i * h);
+    }
+    return sum * h;
+}
+
+// Метод трапеций
+double trapezoidalMethod(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = (f(a) + f(b)) / 2.0;
+    for (int i = 1; i < n; ++i) {
+        sum += f(a + i * h);
+    }
+    return sum * h;
+}
+
+// Метод Симпсона
+double simpsonMethod(double a, double b, int n) {
+    if (n % 2 != 0) n++; // n должно быть четным
+    double h = (b - a) / n;
+    double sum = f(a) + f(b);
+    for (int i = 1; i < n; i += 2) {
+        sum += 4 * f(a + i * h);
+    }
+    for (int i = 2; i < n - 1; i += 2) {
+        sum += 2 * f(a + i * h);
+    }
+    return sum * h / 3.0;
+}
+
+int main() {
+    double a = 0.0;
+    double b = 2.0;
+    int n = 100000; // Количество разбиений
+    double resultRectangle = rectangleMethod(a, b, n);
+    double resultTrapezoidal = trapezoidalMethod(a, b, n);
+    double resultSimpson = simpsonMethod(a, b, n);
+
+    cout << fixed << setprecision(6);
+    cout << "Результат метода прямоугольников: " << resultRectangle << endl;
+    cout << "Результат метода трапеций: " << resultTrapezoidal << endl;
+    cout << "Результат метода Симпсона: " << resultSimpson << endl;
+
+    return 0;
+}
