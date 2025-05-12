@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cmath>
+#include <limits>
+
+double f(double x) {
+    return std::log(x) / (x * x);
+}
+
+double rectangle_method(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = 0.0;
+    for (int i = 0; i < n; ++i) {
+        sum += f(a + i * h);
+    }
+    return sum * h;
+}
+
+double trapezoidal_method(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = (f(a) + f(b)) / 2.0;
+    for (int i = 1; i < n; ++i) {
+        sum += f(a + i * h);
+    }
+    return sum * h;
+}
+
+double simpson_method(double a, double b, int n) {
+    if (n % 2 != 0) n++; // n должно быть четным
+    double h = (b - a) / n;
+    double sum = f(a) + f(b);
+    for (int i = 1; i < n; i += 2) {
+        sum += 4 * f(a + i * h);
+    }
+    for (int i = 2; i < n - 1; i += 2) {
+        sum += 2 * f(a + i * h);
+    }
+    return sum * h / 3.0;
+}
+
+double improper_integral(double (*method)(double, double, int), double a, double epsilon) {
+    double b = 2.0; // Начальное значение для верхнего предела
+    double previous_result = 0.0;
+    int n = 1000; // Начальное количество разбиений
+
+    while (true) {
+        double result = method(a, b, n);
+        if (std::abs(result - previous_result) < epsilon) {
+            return result;
+        }
+        previous_result = result;
+        b *= 2; // Увеличиваем верхний предел
+        n *= 2; // Увеличиваем количество разбиений
+    }
+}
+
+int main() {
+    double a = 1.0; // Нижний предел
+    double epsilon = 1e-6; // Точность
+
+    std::cout << "Rectangle method: " << improper_integral(rectangle_method, a, epsilon) << std::endl;
+    std::cout << "Trapezoidal method: " << improper_integral(trapezoidal_method, a, epsilon) << std::endl;
+    std::cout << "Simpson's method: " << improper_integral(simpson_method, a, epsilon) << std::endl;
+
+    return 0;
+}
