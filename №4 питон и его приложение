@@ -1,0 +1,37 @@
+import math
+
+# 1. Вычисление гипотенузы через интеграл
+def sqrt_integral(x, n=10000):
+    dt = x / n
+    integral = 0
+    for i in range(n):
+        t_i = i * dt
+        if t_i < 1e-10:
+            value = 0
+        else:
+            value = 1 / (2 * math.sqrt(t_i))
+        integral += value * dt
+    return integral
+
+# 2. Вычисление площади через интеграл
+def area_integral(A, B, n=10000):
+    dx = A / n
+    integral = 0
+    for i in range(1, n+1):
+        x_i = i * dx
+        y_i = (B / A) * x_i
+        integral += y_i * dx
+    return integral
+
+# Проверка на контрольном примере:
+A, B = 4, 3
+
+# Гипотенуза
+x = A**2 + B**2
+C = sqrt_integral(x)
+
+# Площадь
+S = area_integral(A, B)
+
+print(f"Гипотенуза = {C}")
+print(f"Площадь = {S}")
